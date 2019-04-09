@@ -36,7 +36,7 @@ $this->title = 'Блог на Yii';
                                 <div class="row article-footer">
                                     <div class="col-md-9 article-author">
                                         <a href="<?= Url::toRoute(['site/user', 'user_id'=>$article->user_id]);?>">
-                                            Admin
+                                            <?= $article->author->name ?> <?= $article->author->surname ?>
                                         </a>
                                     </div>
                                     <div class="col-md-3 article-button">
@@ -47,7 +47,6 @@ $this->title = 'Блог на Yii';
                         </div>
                          <?php endforeach; ?>
                     </div>
-                    
                 </div>
                 <div class="col-md-3">
                     <div class="authors">
@@ -55,7 +54,7 @@ $this->title = 'Блог на Yii';
                         <?php foreach($users as $user):?>
                         <div class="row author">
                             <div class="col-md-3 author-photo">
-                                <a href="<?= Url::toRoute(['site/user', 'user_id'=>$user->user_id]);?>"><img src="/public/images/users/<?= $user->photo ?>"></a>
+                                <a href="<?= Url::toRoute(['site/user', 'user_id'=>$user->user_id]);?>"><img src="<?= $user->getImage(); ?>"></a>
                             </div>
                             <div class="col-md-9 author-name">
                                 <a href="<?= Url::toRoute(['site/user', 'user_id'=>$user->user_id]);?>"><?= $user->name ?> <?= $user->surname ?></a>

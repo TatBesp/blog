@@ -16,7 +16,7 @@ $this->title = $article->article_name;
                 	<div class="post">
                         <div class="row">
                         	<div class="col-md-12 post-image">
-                        		<img src="http://blog/public/images/<?= $article->image; ?>" alt="Изображение статьи">
+                        		<img src="<?= $article->getImage() ?>" alt="Изображение статьи">
                         	</div>
                         </div>
                         <div class="row">
@@ -45,7 +45,7 @@ $this->title = $article->article_name;
                         <?php foreach($users as $user):?>
                         <div class="row author">
                             <div class="col-md-3 author-photo">
-                                <a href="<?= Url::toRoute(['site/user', 'user_id'=>$user->user_id]);?>"><img src="/public/images/users/<?= $user->photo ?>"></a>
+                                <a href="<?= Url::toRoute(['site/user', 'user_id'=>$user->user_id]);?>"><img src="<?= $user->getImage()?>"></a>
                             </div>
                             <div class="col-md-9 author-name">
                                 <a href="<?= Url::toRoute(['site/user', 'user_id'=>$user->user_id]);?>"><?= $user->name ?> <?= $user->surname ?></a>

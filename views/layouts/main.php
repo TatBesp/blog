@@ -10,6 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\assets\PublicAsset;
+use app\models\User;
 
 PublicAsset::register($this);
 ?>
@@ -40,18 +41,26 @@ PublicAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
+
             Yii::$app->user->isGuest ? (
             ['label' => 'Авторизация', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
+        ) : (    
+            '<li>'
+            . Html::a('Мой профиль', ['site/user', 'user_id'=>User::getUserId()], ['class' => 'profile-link'])
+            . '</li>'     
+            
+            ),
+        Yii::$app->user->isGuest ? (
+            ['label' => 'Регистрация', 'url' => ['/site/signup']]
+        ) : (
+              '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
                     'Выйти (' . Yii::$app->user->identity->email . ')',
                     ['class' => 'btn btn-link logout']
-                )
+                )   
                 . Html::endForm()
-                . '</li>'
-                /*['label' => 'Мой профиль', 'url' => ['/site/user?user_id=1']]*/
+                . '</li>'          
             )
         ],
     ]);

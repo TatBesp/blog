@@ -13,6 +13,9 @@ use app\models\Article;
 use app\models\User;
 use yii\data\Pagination;
 use app\models\SignupForm;
+use app\models\ImageUpload;
+use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 class SiteController extends Controller
 {
@@ -172,5 +175,37 @@ class SiteController extends Controller
              'users'=>$udata['users'],
              'models' => $models
          ]);
+    }
+        protected function findModel($id)
+    {
+        if (($model = User::findOne($user_id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionProfile()
+    {
+        $user= User::getProfile();
+        if(Yii::$app->request->isPost)
+        {
+            $user->load(Yii::$app->request->post());
+            if($user->updateUser())
+            {
+                return $this->redirect(['site/user', 'user_id'=>$user->user_id]);
+            }
+        }
+        
+        $user_image = new ImageUpload;
+        if (Yii::$app->request->isPost)
+        {
+            $file = UploadedFile::getInstance($user_image, 'image');
+            if($user->saveImage($user_image->uploadFile($file, $user->photo)))
+            {
+                 return $this->redirect(['site/user', 'user_id'=>$user->user_id]);
+            }
+        }
+        return $this->render('profile', ['user'=>$user, 'user_image'=>$user_image]);    
     }
 }

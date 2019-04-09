@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
+use app\models\User;
 
 /**
  * This is the model class for table "article".
@@ -30,7 +31,8 @@ class Article extends \yii\db\ActiveRecord
             [['article_name'], 'required'],
             [['article_name', 'description', 'content'],'string'],
             [['date'], 'default', 'value' => date('Y-m-d')],
-            [['article_name'], 'string', 'max' => 255]
+            [['article_name'], 'string', 'max' => 255],
+            [['user_id'], 'default', 'value' => User::getUserId()]
         ];
     }
 
@@ -41,23 +43,23 @@ class Article extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'article_name' => 'Article Name',
-            'description' => 'Description',
-            'content' => 'Content',
-            'date' => 'Date',
-            'image' => 'Image',
-            'user_id' => 'User ID',
+            'article_name' => 'Название статьи',
+            'description' => 'Описание',
+            'content' => 'Статья',
+            'date' => 'Дата',
+            'image' => 'Изображение',
+            'user_id' => 'Пользователь',
 
         ];
     }
     public function saveImage($filename)
     {
-        $this->image=$filename;
+        $this->image = $filename;
         return $this->save(false);
     }
     public function getImage()
     {
-        return ($this->image) ? 'http://blog/public/images/' . $this->image : 'public/images/no-image.png';
+        return ($this->image) ? '/images/' . $this->image : '/images/no-image.png';
     }
     public function deleteImage()
     {
@@ -71,7 +73,7 @@ class Article extends \yii\db\ActiveRecord
     }
      public static function getAll($pageSize = 5)
     {
-        $query = Article::find();
+        $query = Article::find()->orderby(['date'=>SORT_DESC]);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize'=>$pageSize]);
         $articles = $query->offset($pagination->offset)
@@ -85,7 +87,7 @@ class Article extends \yii\db\ActiveRecord
     }
     public function getArticlesByUser($user_id)
     {
-        $query = Article::find()->where(['user_id'=>$user_id]);
+        $query = Article::find()->where(['user_id'=>$user_id])->orderby(['date'=>SORT_DESC]);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize'=>5]);
         $articles = $query->offset($pagination->offset)
@@ -99,7 +101,7 @@ class Article extends \yii\db\ActiveRecord
     }
     public function getAuthor()
     {
-       
+        return $this->hasOne(User::className(), ['user_id'=>'user_id']);
     }
     
 }

@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use app\models\Article;
+use app\models\User;
 use app\models\ArticleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -54,9 +55,17 @@ class ArticleController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $user_id=User::getUserId();
+        $model = $this->findModel($id);
+        if($model->user_id==$user_id){
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        }
+        else {
+            return $this->redirect(['error']);
+        }
+
     }
 
     /**
@@ -85,9 +94,10 @@ class ArticleController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
-    {
+    {   
+        $user_id=User::getUserId();
         $model = $this->findModel($id);
-
+        if($model->user_id==$user_id){
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->article_id]);
         }
@@ -96,6 +106,10 @@ class ArticleController extends Controller
             'model' => $model,
         ]);
     }
+    else{
+        return $this->redirect(['error']);
+    }
+}
 
     /**
      * Deletes an existing Article model.
@@ -126,19 +140,19 @@ class ArticleController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-        public function actionSetImage($id)
+       public function actionSetImage($id)
     {
         $model = new ImageUpload;
-
-        if(Yii::$app->request->isPost)
+        if (Yii::$app->request->isPost)
         {
             $article = $this->findModel($id);
             $file = UploadedFile::getInstance($model, 'image');
             if($article->saveImage($model->uploadFile($file, $article->image)))
             {
-                return $this->redirect(['view', 'id'=>$article->id]);
+                return $this->redirect(['view', 'id'=>$article->article_id]);
             }
         }
+        
         return $this->render('image', ['model'=>$model]);
     }
 }
