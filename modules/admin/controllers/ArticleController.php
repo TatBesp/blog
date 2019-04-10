@@ -38,13 +38,14 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ArticleSearch();
+       /* $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]);*/
+        return $this->redirect(['error']);
     }
 
     /**
@@ -122,7 +123,7 @@ class ArticleController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/']);
     }
 
     /**
@@ -143,16 +144,21 @@ class ArticleController extends Controller
        public function actionSetImage($id)
     {
         $model = new ImageUpload;
-        if (Yii::$app->request->isPost)
-        {
-            $article = $this->findModel($id);
-            $file = UploadedFile::getInstance($model, 'image');
-            if($article->saveImage($model->uploadFile($file, $article->image)))
+        $user_id=User::getUserId();
+        $article = $this->findModel($id);
+        if($article->user_id==$user_id){
+            if (Yii::$app->request->isPost)
             {
-                return $this->redirect(['view', 'id'=>$article->article_id]);
+                
+                $file = UploadedFile::getInstance($model, 'image');
+                if($article->saveImage($model->uploadFile($file, $article->image)))
+                {
+                    return $this->redirect(['view', 'id'=>$article->article_id]);
+                }
             }
+            
+            return $this->render('image', ['model'=>$model]);
         }
-        
-        return $this->render('image', ['model'=>$model]);
+        else return $this->redirect('error');
     }
 }
