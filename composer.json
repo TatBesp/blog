@@ -34,8 +34,7 @@
         "codeception/base": "~2.3.0",
         "codeception/verify": "~0.4.0",
         "codeception/specify": "~0.4.6",
-        "fxp/composer-asset-plugin": "*",
-        "ext-gd": "*"
+        "fxp/composer-asset-plugin": "*"
     },
     "config": {
         "process-timeout": 1800,
