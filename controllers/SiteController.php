@@ -187,7 +187,7 @@ class SiteController extends Controller
 
     public function actionProfile()
     {
-        $user= User::getProfile();
+        $user=Yii::$app->user->identity->user_id;
         if($user){
         if(Yii::$app->request->isPost)
         {
