@@ -5,12 +5,12 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%article}}`.
  */
-class m190411_075353_create_article_table extends Migration
+class m190411_095229_create_article_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+     public function safeUp()
     {
         $this->createTable('{{%article}}', [
             'article_id' => $this->primaryKey(),
@@ -21,6 +21,20 @@ class m190411_075353_create_article_table extends Migration
             'image'=>$this->string(),
             'user_id'=>$this->integer(),
         ]);
+
+        $this->createIndex( 
+        'idx-article-user_id', 
+        'article', 
+        'user_id' 
+        ); 
+        $this->addForeignKey( 
+            'fk-article-user_id', 
+            'article', 
+            'user_id', 
+            'user', 
+            'user_id', 
+            'CASCADE' 
+        ); 
     }
 
     /**
@@ -31,17 +45,5 @@ class m190411_075353_create_article_table extends Migration
         $this->dropTable('{{%article}}');
     }
 
-    $this->createIndex( 
-        'idx-article-user_id', 
-        'article', 
-        'user_id' 
-    ); 
-    $this->addForeignKey( 
-        'fk-article-user_id', 
-        'article', 
-        'user_id', 
-        'user', 
-        'user_id', 
-        'CASCADE' 
-    ); 
+    
 }
