@@ -188,6 +188,7 @@ class SiteController extends Controller
     public function actionProfile()
     {
         $user= User::getProfile();
+        if($user){
         if(Yii::$app->request->isPost)
         {
             $user->load(Yii::$app->request->post());
@@ -207,5 +208,7 @@ class SiteController extends Controller
             }
         }
         return $this->render('profile', ['user'=>$user, 'user_image'=>$user_image]);    
+    }
+    return $this->redirect('error');
     }
 }
