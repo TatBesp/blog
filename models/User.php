@@ -116,13 +116,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Article::className(), ['user_id' => 'user_id']);
     }
-    public function getUserId(){
+    public static function getUserId(){
         return Yii::$app->user->identity->user_id;
     }
-    public function getProfile(){
+    public static function getProfile(){
         return User::find()->where(['user_id'=>User::getUserId()])->one();
     } 
-    public function updateUser(){
+    public static function updateUser(){
         $user = $this->getProfile();
         $user->attributes = $this->attributes;
         return $user->update();
