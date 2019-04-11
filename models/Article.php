@@ -85,7 +85,7 @@ class Article extends \yii\db\ActiveRecord
         
         return $data;
     }
-    public function getArticlesByUser($user_id)
+    public static function getArticlesByUser($user_id)
     {
         $query = Article::find()->where(['user_id'=>$user_id])->orderby(['date'=>SORT_DESC]);
         $count = $query->count();
