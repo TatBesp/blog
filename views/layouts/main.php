@@ -46,7 +46,7 @@ PublicAsset::register($this);
             ['label' => 'Авторизация', 'url' => ['/site/login']]
         ) : (    
             '<li>'
-            . Html::a('Мой профиль', ['site/user', 'user_id'=>Yii::$app->user->identity->user_id;], ['class' => 'profile-link'])
+            . Html::a('Мой профиль', ['site/user', 'user_id'=>Yii::$app->user->identity->user_id], ['class' => 'profile-link'])
             . '</li>'     
             
             ),
