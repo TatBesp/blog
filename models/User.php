@@ -122,7 +122,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public static function getProfile(){
         return User::find()->where(['user_id'=>User::getUserId()])->one();
     } 
-    public static function updateUser(){
+    public function updateUser(){
         $user = User::getProfile();
         $user->attributes = $this->attributes;
         return $user->update();
