@@ -39,20 +39,26 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
-            //['label' => 'Статьи', 'url' => ['/admin/article/']],
+
             Yii::$app->user->isGuest ? (
-                ['label' => 'Авторизация', 'url' => ['/site/login']]
-   
-            ) : (
-                '<li>'
+            ['label' => 'Авторизация', 'url' => ['/site/login']]
+        ) : (    
+            '<li>'
+            . Html::a('Мой профиль', ['/site/user', 'user_id'=>Yii::$app->user->identity->user_id], ['class' => 'profile-link'])
+            . '</li>'     
+            
+            ),
+        Yii::$app->user->isGuest ? (
+            ['label' => 'Регистрация', 'url' => ['/site/signup']]
+        ) : (
+              '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Выход (' . Yii::$app->user->identity->email . ')',
+                    'Выйти (' . Yii::$app->user->identity->email . ')',
                     ['class' => 'btn btn-link logout']
-                )
+                )   
                 . Html::endForm()
-                . '</li>'
-                
+                . '</li>'          
             )
         ],
     ]);
