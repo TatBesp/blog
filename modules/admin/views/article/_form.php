@@ -14,11 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'article_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'content')->textarea(['rows' => 16]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 6, 'maxlength' => 600]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>

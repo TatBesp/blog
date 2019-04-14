@@ -26,7 +26,8 @@ $this->title = $article->article_name;
                         </div>
                         <div class="row post-info">
                         	<div class="col-md-6 post-author">
-                        		<a href="<?= Url::toRoute(['site/user', 'user_id'=>$article->user_id]);?>">Admin</a>
+                        		<a href="<?= Url::toRoute(['site/user', 'user_id'=>$article->user_id]);?>">
+                                    <?= $article->author->name ?> <?= $article->author->surname ?></a>
                         	</div>
                         	<div class="col-md-6 post-date">
                         		<p><?= $article->date ?></p>

@@ -61,7 +61,7 @@ $this->title = 'Блог на Yii - страница пользователя';
                             <p> <?= $user->name ?> <?= $user->surname ?> <?= $user->patronymic ?></p>
                             <p class="title-info">Email </p>
                             <p> <?= $user->email ?> </p>
-                            <?php if($user->user_id==$user->getUserId()) { ?> <p class="user-btn"><a class="update-btn" href="http://blog/site/profile">Редактировать профиль</a> </p>
+                            <?php if($user->user_id==$user->getUserId()) { ?> <p class="user-btn"><a class="update-btn" href="/site/profile">Редактировать профиль</a> </p>
                             <p class="user-btn"><a href="/admin/article/create" class="update-btn">Создать новый пост</a></p><? } ?>
                         </div>
                     </div>
