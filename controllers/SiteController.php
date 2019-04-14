@@ -209,6 +209,8 @@ class SiteController extends Controller
         }
         return $this->render('profile', ['user'=>$user, 'user_image'=>$user_image]);    
     }
-    return $this->redirect('error');
+    else{
+        return $this->redirect('error');
+        }
     }
 }

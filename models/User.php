@@ -126,6 +126,5 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $user = User::getProfile();
         $user->attributes = $this->attributes;
         return $user->update();
-    }
-         
+    }         
 }

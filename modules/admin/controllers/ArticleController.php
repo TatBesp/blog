@@ -99,17 +99,17 @@ class ArticleController extends Controller
         $user_id=User::getUserId();
         $model = $this->findModel($id);
         if($model->user_id==$user_id){
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->article_id]);
-        }
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->article_id]);
+            }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-    else{
-        return $this->redirect(['error']);
-    }
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+        else{
+          return $this->redirect(['error']);
+        }
 }
 
     /**
